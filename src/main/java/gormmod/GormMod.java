@@ -3,16 +3,8 @@ package gormmod;
 import basemod.AutoAdd;
 import basemod.BaseMod;
 import basemod.interfaces.*;
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
-import com.megacrit.cardcrawl.relics.BurningBlood;
-import com.megacrit.cardcrawl.unlock.UnlockTracker;
-import gormmod.cards.BaseCard;
-import gormmod.relics.BaseRelic;
-import gormmod.relics.CoffeeRelic;
-import gormmod.util.GeneralUtils;
-import gormmod.util.KeywordInfo;
-import gormmod.util.TextureLoader;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.evacipated.cardcrawl.modthespire.Loader;
@@ -22,6 +14,13 @@ import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.google.gson.Gson;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.localization.*;
+import com.megacrit.cardcrawl.unlock.UnlockTracker;
+import gormmod.cards.BaseCard;
+import gormmod.characters.TheCrab;
+import gormmod.relics.BaseRelic;
+import gormmod.util.GeneralUtils;
+import gormmod.util.KeywordInfo;
+import gormmod.util.TextureLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.scannotation.AnnotationDB;
@@ -35,10 +34,17 @@ public class GormMod implements
         EditKeywordsSubscriber,
         EditRelicsSubscriber,
         EditCardsSubscriber,
-        PostCreateStartingRelicsSubscriber,
+        EditCharactersSubscriber,
         PostInitializeSubscriber {
     public static ModInfo info;
     public static String modID; //Edit your pom.xml to change this
+    private static final Color cardColor = new Color(128f/255f, 128f/255f, 128f/255f, 1f);
+
+
+
+
+    private static final String CHAR_SELECT_BUTTON = characterPath("select/button.png");
+    private static final String CHAR_SELECT_PORTRAIT = characterPath("select/portrait.png");
 
     static {
         loadModInfo();
@@ -46,6 +52,16 @@ public class GormMod implements
 
     public static final Logger logger = LogManager.getLogger(modID); //Used to output to the console.
     private static final String resourcesFolder = "gormmod";
+
+    private static final String BG_ATTACK = characterPath("cardback/bg_attack.png");
+    private static final String BG_ATTACK_P = characterPath("cardback/bg_attack_p.png");
+    private static final String BG_SKILL = characterPath("cardback/bg_skill.png");
+    private static final String BG_SKILL_P = characterPath("cardback/bg_skill_p.png");
+    private static final String BG_POWER = characterPath("cardback/bg_power.png");
+    private static final String BG_POWER_P = characterPath("cardback/bg_power_p.png");
+    private static final String ENERGY_ORB = characterPath("cardback/energy_orb.png");
+    private static final String ENERGY_ORB_P = characterPath("cardback/energy_orb_p.png");
+    private static final String SMALL_ORB = characterPath("cardback/small_orb.png");
 
     //This is used to prefix the IDs of various objects like cards and relics,
     //to avoid conflicts between different mods using the same name for things.
@@ -56,13 +72,16 @@ public class GormMod implements
     //This will be called by ModTheSpire because of the @SpireInitializer annotation at the top of the class.
     public static void initialize() {
         new GormMod();
+
+        BaseMod.addColor(TheCrab.Enums.CARD_COLOR, cardColor, BG_ATTACK,
+                BG_SKILL, BG_POWER, ENERGY_ORB,
+                BG_ATTACK_P, BG_SKILL_P, BG_POWER_P,
+                ENERGY_ORB_P, SMALL_ORB);
     }
 
     public GormMod() {
         BaseMod.subscribe(this); //This will make BaseMod trigger all the subscribers at their appropriate times.
         logger.info(modID + " subscribed to BaseMod.");
-
-
     }
 
     @Override
@@ -209,17 +228,15 @@ public class GormMod implements
     }
 
     @Override
-    public void receivePostCreateStartingRelics(AbstractPlayer.PlayerClass playerClass, ArrayList<String> relicsList) {
-        relicsList.remove(BurningBlood.ID);
-        relicsList.add(CoffeeRelic.ID);
-    }
-
-
-    @Override
     public void receiveEditCards() {
         new AutoAdd(modID) //Loads files from this mod
                 .packageFilter(BaseCard.class) //In the same package as this class
                 .setDefaultSeen(true) //And marks them as seen in the compendium
                 .cards(); //Adds the cards
+    }
+
+    @Override
+    public void receiveEditCharacters() {
+        BaseMod.addCharacter(new TheCrab(), CHAR_SELECT_BUTTON, CHAR_SELECT_PORTRAIT, TheCrab.Enums.THE_CRAB);
     }
 }

@@ -6,12 +6,12 @@
       "Gain [E] at the start of your turn. [E] is an energy icon."
     ]
   },
-  "${modID}:CoffeeRelic": {
-    "NAME": "Coffee",
-    "FLAVOR": "I'm absolutely awake!",
+  "${modID}:OrangeRelic": {
+    "NAME": "Tasty Orange",
+    "FLAVOR": "Freshly sliced, a crab's favourite.",
     "DESCRIPTIONS": [
-      "Whenever you play a card, gain #b",
-      " #yAccuracy."
+      "Whenever you defeat an enemy, gain #b",
+      " #yStrength."
     ]
   }
 }

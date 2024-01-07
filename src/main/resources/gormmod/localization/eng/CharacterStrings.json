@@ -1,12 +1,12 @@
 {
-  "${modID}:CharacterID": {
+  "${modID}:TheCrab": {
     "NAMES": [
-      "The Spriggs",
-      "the Spriggs"
+      "The Crab",
+      "the Crab"
     ],
     "TEXT": [
-      "An warrior versed in ways of the ancient art known as the flipside, NL Spriggs wishes to reach the heart.",
-      "NL You TOUCH the heart.",
+      "This crab just wants to get back to the beach.. Where did the exploding slugs go?!.",
+      "NL You CLAW the heart.",
       "Navigating an unlit street, you come across several hooded figures in the midst of some dark ritual. As you approach, they turn to you in eerie unison. The tallest among them bares fanged teeth and extends a long, pale hand towards you. NL ~\"Join~ ~us~ ~basic~ ~one,~ ~and~ ~feel~ ~the~ ~warmth~ ~of~ ~the~ ~Spire.\"~"
     ]
   }
