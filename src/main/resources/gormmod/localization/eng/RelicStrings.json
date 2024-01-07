@@ -5,5 +5,13 @@
     "DESCRIPTIONS": [
       "Gain [E] at the start of your turn. [E] is an energy icon."
     ]
+  },
+  "${modID}:OrangeRelic": {
+    "NAME": "Tasty Orange",
+    "FLAVOR": "Freshly sliced, a crab's favourite.",
+    "DESCRIPTIONS": [
+      "Whenever you defeat an enemy, gain #b",
+      " #yStrength."
+    ]
   }
 }

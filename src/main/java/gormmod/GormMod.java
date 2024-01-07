@@ -1,13 +1,10 @@
 package gormmod;
 
+import basemod.AutoAdd;
 import basemod.BaseMod;
-import basemod.interfaces.EditKeywordsSubscriber;
-import basemod.interfaces.EditStringsSubscriber;
-import basemod.interfaces.PostInitializeSubscriber;
-import gormmod.util.GeneralUtils;
-import gormmod.util.KeywordInfo;
-import gormmod.util.TextureLoader;
+import basemod.interfaces.*;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.evacipated.cardcrawl.modthespire.Loader;
@@ -17,6 +14,13 @@ import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.google.gson.Gson;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.localization.*;
+import com.megacrit.cardcrawl.unlock.UnlockTracker;
+import gormmod.cards.BaseCard;
+import gormmod.characters.TheCrab;
+import gormmod.relics.BaseRelic;
+import gormmod.util.GeneralUtils;
+import gormmod.util.KeywordInfo;
+import gormmod.util.TextureLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.scannotation.AnnotationDB;
@@ -28,12 +32,36 @@ import java.util.*;
 public class GormMod implements
         EditStringsSubscriber,
         EditKeywordsSubscriber,
+        EditRelicsSubscriber,
+        EditCardsSubscriber,
+        EditCharactersSubscriber,
         PostInitializeSubscriber {
     public static ModInfo info;
     public static String modID; //Edit your pom.xml to change this
-    static { loadModInfo(); }
+    private static final Color cardColor = new Color(128f/255f, 128f/255f, 128f/255f, 1f);
+
+
+
+
+    private static final String CHAR_SELECT_BUTTON = characterPath("select/button.png");
+    private static final String CHAR_SELECT_PORTRAIT = characterPath("select/portrait.png");
+
+    static {
+        loadModInfo();
+    }
+
     public static final Logger logger = LogManager.getLogger(modID); //Used to output to the console.
     private static final String resourcesFolder = "gormmod";
+
+    private static final String BG_ATTACK = characterPath("cardback/bg_attack.png");
+    private static final String BG_ATTACK_P = characterPath("cardback/bg_attack_p.png");
+    private static final String BG_SKILL = characterPath("cardback/bg_skill.png");
+    private static final String BG_SKILL_P = characterPath("cardback/bg_skill_p.png");
+    private static final String BG_POWER = characterPath("cardback/bg_power.png");
+    private static final String BG_POWER_P = characterPath("cardback/bg_power_p.png");
+    private static final String ENERGY_ORB = characterPath("cardback/energy_orb.png");
+    private static final String ENERGY_ORB_P = characterPath("cardback/energy_orb_p.png");
+    private static final String SMALL_ORB = characterPath("cardback/small_orb.png");
 
     //This is used to prefix the IDs of various objects like cards and relics,
     //to avoid conflicts between different mods using the same name for things.
@@ -44,6 +72,11 @@ public class GormMod implements
     //This will be called by ModTheSpire because of the @SpireInitializer annotation at the top of the class.
     public static void initialize() {
         new GormMod();
+
+        BaseMod.addColor(TheCrab.Enums.CARD_COLOR, cardColor, BG_ATTACK,
+                BG_SKILL, BG_POWER, ENERGY_ORB,
+                BG_ATTACK_P, BG_SKILL_P, BG_POWER_P,
+                ENERGY_ORB_P, SMALL_ORB);
     }
 
     public GormMod() {
@@ -63,10 +96,10 @@ public class GormMod implements
     /*----------Localization----------*/
 
     //This is used to load the appropriate localization files based on language.
-    private static String getLangString()
-    {
+    private static String getLangString() {
         return Settings.language.name().toLowerCase();
     }
+
     private static final String defaultLanguage = "eng";
 
     public static final Map<String, KeywordInfo> keywords = new HashMap<>();
@@ -83,8 +116,7 @@ public class GormMod implements
         if (!defaultLanguage.equals(getLangString())) {
             try {
                 loadLocalization(getLangString());
-            }
-            catch (GdxRuntimeException e) {
+            } catch (GdxRuntimeException e) {
                 e.printStackTrace();
             }
         }
@@ -112,8 +144,7 @@ public class GormMod implements
     }
 
     @Override
-    public void receiveEditKeywords()
-    {
+    public void receiveEditKeywords() {
         Gson gson = new Gson();
         String json = Gdx.files.internal(localizationPath(defaultLanguage, "Keywords.json")).readString(String.valueOf(StandardCharsets.UTF_8));
         KeywordInfo[] keywords = gson.fromJson(json, KeywordInfo[].class);
@@ -123,17 +154,14 @@ public class GormMod implements
         }
 
         if (!defaultLanguage.equals(getLangString())) {
-            try
-            {
+            try {
                 json = Gdx.files.internal(localizationPath(getLangString(), "Keywords.json")).readString(String.valueOf(StandardCharsets.UTF_8));
                 keywords = gson.fromJson(json, KeywordInfo[].class);
                 for (KeywordInfo keyword : keywords) {
                     keyword.prep();
                     registerKeyword(keyword);
                 }
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 logger.warn(modID + " does not support " + getLangString() + " keywords.");
             }
         }
@@ -141,8 +169,7 @@ public class GormMod implements
 
     private void registerKeyword(KeywordInfo info) {
         BaseMod.addKeyword(modID.toLowerCase(), info.PROPER_NAME, info.NAMES, info.DESCRIPTION);
-        if (!info.ID.isEmpty())
-        {
+        if (!info.ID.isEmpty()) {
             keywords.put(info.ID, info);
         }
     }
@@ -155,12 +182,15 @@ public class GormMod implements
     public static String imagePath(String file) {
         return resourcesFolder + "/images/" + file;
     }
+
     public static String characterPath(String file) {
         return resourcesFolder + "/images/character/" + file;
     }
+
     public static String powerPath(String file) {
         return resourcesFolder + "/images/powers/" + file;
     }
+
     public static String relicPath(String file) {
         return resourcesFolder + "/images/relics/" + file;
     }
@@ -168,7 +198,7 @@ public class GormMod implements
 
     //This determines the mod's ID based on information stored by ModTheSpire.
     private static void loadModInfo() {
-        Optional<ModInfo> infos = Arrays.stream(Loader.MODINFOS).filter((modInfo)->{
+        Optional<ModInfo> infos = Arrays.stream(Loader.MODINFOS).filter((modInfo) -> {
             AnnotationDB annotationDB = Patcher.annotationDBMap.get(modInfo.jarURL);
             if (annotationDB == null)
                 return false;
@@ -178,9 +208,35 @@ public class GormMod implements
         if (infos.isPresent()) {
             info = infos.get();
             modID = info.ID;
-        }
-        else {
+        } else {
             throw new RuntimeException("Failed to determine mod info/ID based on initializer.");
         }
+    }
+
+    @Override
+    public void receiveEditRelics() {
+        new AutoAdd(modID)
+                .packageFilter(BaseRelic.class)
+                .any(BaseRelic.class, (info, relic) -> {
+                    if (relic.pool != null)
+                        BaseMod.addRelicToCustomPool(relic, relic.pool);
+                    else BaseMod.addRelic(relic, relic.relicType);
+
+                    if (info.seen)
+                        UnlockTracker.markRelicAsSeen(relic.relicId);
+                });
+    }
+
+    @Override
+    public void receiveEditCards() {
+        new AutoAdd(modID) //Loads files from this mod
+                .packageFilter(BaseCard.class) //In the same package as this class
+                .setDefaultSeen(true) //And marks them as seen in the compendium
+                .cards(); //Adds the cards
+    }
+
+    @Override
+    public void receiveEditCharacters() {
+        BaseMod.addCharacter(new TheCrab(), CHAR_SELECT_BUTTON, CHAR_SELECT_PORTRAIT, TheCrab.Enums.THE_CRAB);
     }
 }
