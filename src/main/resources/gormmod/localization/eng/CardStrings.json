@@ -12,5 +12,13 @@
   "${modID}:CoffeeCard": {
     "NAME": "Espresso",
     "DESCRIPTION": "Gain !B! Block. NL On use, gain !M! accuracy."
+  },
+  "${modID}:BlockPink": {
+    "NAME": "Claw Shield",
+    "DESCRIPTION": "Gain !B! Block."
+  },
+  "${modID}:StrikePink": {
+    "NAME": "Claw Swipe",
+    "DESCRIPTION": "Deal !D! damage."
   }
 }

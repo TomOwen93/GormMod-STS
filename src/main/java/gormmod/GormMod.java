@@ -38,7 +38,8 @@ public class GormMod implements
         PostInitializeSubscriber {
     public static ModInfo info;
     public static String modID; //Edit your pom.xml to change this
-    private static final Color cardColor = new Color(128f/255f, 128f/255f, 128f/255f, 1f);
+    private static final Color cardColor = new Color(255f, 192f/255f, 203f/255f, 1f);
+
 
 
 

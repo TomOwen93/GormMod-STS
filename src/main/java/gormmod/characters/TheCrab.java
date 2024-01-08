@@ -9,7 +9,6 @@ import com.badlogic.gdx.math.MathUtils;
 import com.evacipated.cardcrawl.modthespire.lib.SpireEnum;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.cards.blue.Defend_Blue;
 import com.megacrit.cardcrawl.cards.green.Neutralize;
 import com.megacrit.cardcrawl.cards.red.Strike_Red;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
@@ -20,8 +19,11 @@ import com.megacrit.cardcrawl.helpers.CardLibrary;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.ScreenShake;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
+import com.megacrit.cardcrawl.relics.PrismaticShard;
 import com.megacrit.cardcrawl.screens.CharSelectInfo;
+import gormmod.cards.BlockPink;
 import gormmod.cards.CoffeeCard;
+import gormmod.cards.StrikePink;
 import gormmod.relics.OrangeRelic;
 
 import java.util.ArrayList;
@@ -43,6 +45,7 @@ public class TheCrab extends CustomPlayer {
     private static final String[] NAMES = characterStrings.NAMES;
     private static final String[] TEXT = characterStrings.TEXT;
 
+
     //Image file paths
     private static final String SHOULDER_1 = characterPath("shoulder.png"); //Shoulder 1 and 2 are used at rest sites.
     private static final String SHOULDER_2 = characterPath("shoulder2.png");
@@ -53,9 +56,11 @@ public class TheCrab extends CustomPlayer {
         //Library color is basically the same as card color, but you need both because that's how the game was made.
         @SpireEnum
         public static AbstractPlayer.PlayerClass THE_CRAB;
-        @SpireEnum(name = "CHARACTER_PINK_COLOR") // These two MUST match. Change it to something unique for your character.
+        @SpireEnum(name = "CHARACTER_PINK_COLOR")
+        // These two MUST match. Change it to something unique for your character.
         public static AbstractCard.CardColor CARD_COLOR;
-        @SpireEnum(name = "CHARACTER_PINK_COLOR") @SuppressWarnings("unused")
+        @SpireEnum(name = "CHARACTER_PINK_COLOR")
+        @SuppressWarnings("unused")
         public static CardLibrary.LibraryType LIBRARY_COLOR;
     }
 
@@ -82,10 +87,10 @@ public class TheCrab extends CustomPlayer {
         ArrayList<String> retVal = new ArrayList<>();
         //List of IDs of cards for your starting deck.
         //If you want multiple of the same card, you have to add it multiple times.
-        retVal.add(Strike_Red.ID);
-        retVal.add(Strike_Red.ID);
-        retVal.add(Defend_Blue.ID);
-        retVal.add(Defend_Blue.ID);
+        retVal.add(StrikePink.ID);
+        retVal.add(StrikePink.ID);
+        retVal.add(BlockPink.ID);
+        retVal.add(BlockPink.ID);
         retVal.add(Neutralize.ID);
         retVal.add(CoffeeCard.ID);
 
@@ -97,6 +102,7 @@ public class TheCrab extends CustomPlayer {
         ArrayList<String> retVal = new ArrayList<>();
         //IDs of starting relics. You can have multiple, but one is recommended.
         retVal.add(OrangeRelic.ID);
+        retVal.add(PrismaticShard.ID);
 
         return retVal;
     }
@@ -118,7 +124,7 @@ public class TheCrab extends CustomPlayer {
     @Override
     public AbstractGameAction.AttackEffect[] getSpireHeartSlashEffect() {
         //These attack effects will be used when you attack the heart.
-        return new AbstractGameAction.AttackEffect[] {
+        return new AbstractGameAction.AttackEffect[]{
                 AbstractGameAction.AttackEffect.SLASH_VERTICAL,
                 AbstractGameAction.AttackEffect.SLASH_HEAVY,
                 AbstractGameAction.AttackEffect.BLUNT_HEAVY
@@ -128,6 +134,7 @@ public class TheCrab extends CustomPlayer {
     private final Color cardRenderColor = Color.LIGHT_GRAY.cpy(); //Used for some vfx on moving cards (sometimes) (maybe)
     private final Color cardTrailColor = Color.LIGHT_GRAY.cpy(); //Used for card trail vfx during gameplay.
     private final Color slashAttackColor = Color.LIGHT_GRAY.cpy(); //Used for a screen tint effect when you attack the heart.
+
     @Override
     public Color getCardRenderColor() {
         return cardRenderColor;
@@ -158,6 +165,7 @@ public class TheCrab extends CustomPlayer {
         CardCrawlGame.sound.playA("EVENT_LAB", MathUtils.random(-0.2F, 0.2F));
         CardCrawlGame.screenShake.shake(ScreenShake.ShakeIntensity.MED, ScreenShake.ShakeDur.SHORT, false);
     }
+
     @Override
     public String getCustomModeCharacterButtonSoundKey() {
         //Similar to doCharSelectScreenSelectEffect, but used for the Custom mode screen. No shaking.
@@ -169,14 +177,17 @@ public class TheCrab extends CustomPlayer {
     public String getLocalizedCharacterName() {
         return NAMES[0];
     }
+
     @Override
     public String getTitle(PlayerClass playerClass) {
         return NAMES[1];
     }
+
     @Override
     public String getSpireHeartText() {
         return TEXT[1];
     }
+
     @Override
     public String getVampireText() {
         return TEXT[2]; //Generally, the only difference in this text is how the vampires refer to the player.
