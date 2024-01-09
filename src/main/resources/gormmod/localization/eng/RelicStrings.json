@@ -13,5 +13,14 @@
       "Whenever you defeat an enemy, gain #b",
       " #yStrength."
     ]
+  },
+  "${modID}:HighRollerRelic": {
+    "NAME": "High Roller",
+    "FLAVOR": "Are you feeling lucky... crab?",
+    "DESCRIPTIONS": [
+      "Whenever you open a chest, you have an #g%s #gchance to gain an NL additional ",
+      "[#cccccc]common[] / [#42d4f5]uncommon[] / [#decb1f]rare[] relic",
+      ", but a #r%s #rchance to lose ALL relics."
+    ]
   }
 }
