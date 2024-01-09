@@ -44,10 +44,12 @@ public class HighRollerRelic extends BaseRelic {
         if(!bossChest) {
             if (AbstractDungeon.relicRng.randomBoolean(ROLL_CHANCE)) {
                 CombatRewardScreen.TEXT[7] = "Crabtastic Roll!";
+                CombatRewardScreen.TEXT[8] = "Crabtastic Roll!";
                 AbstractDungeon.getCurrRoom().addRelicToRewards(relics.get(randomIndex));
                 this.addToTop(new RelicAboveCreatureAction(AbstractDungeon.player, this));
             } else {
                 CombatRewardScreen.TEXT[7] = "That's some crabby luck!";
+                CombatRewardScreen.TEXT[8] = "That's some crabby luck!";
                 AbstractDungeon.getCurrRoom().removeOneRelicFromRewards();
             }
         }
