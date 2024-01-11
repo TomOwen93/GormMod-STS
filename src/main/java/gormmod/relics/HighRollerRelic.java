@@ -12,7 +12,7 @@ import static gormmod.GormMod.makeID;
 
 @AutoAdd.Seen
 public class HighRollerRelic extends BaseRelic {
-    private static final String NAME = "HighRollerRelic";
+    private static final String NAME = "HighRoller";
     public static final String ID = makeID(NAME);
     private static final RelicTier RARITY = RelicTier.RARE;
     private static final LandingSound SOUND = LandingSound.MAGICAL;

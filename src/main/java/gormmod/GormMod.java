@@ -41,9 +41,6 @@ public class GormMod implements
     private static final Color cardColor = new Color(255f, 192f/255f, 203f/255f, 1f);
 
 
-
-
-
     private static final String CHAR_SELECT_BUTTON = characterPath("select/button.png");
     private static final String CHAR_SELECT_PORTRAIT = characterPath("select/portrait.png");
 

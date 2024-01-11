@@ -1,8 +1,8 @@
 {
-  "${modID}:PowerID": {
-    "NAME": "Ultimate Power",
+  "${modID}:Luck": {
+    "NAME": "Luck",
     "DESCRIPTIONS": [
-      "You are Very Cool and Strong."
+      "Gain a chance to add an additional damage roll on every attack"
     ]
   }
 }

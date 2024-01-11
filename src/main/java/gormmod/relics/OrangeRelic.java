@@ -13,7 +13,7 @@ import static gormmod.GormMod.makeID;
 
 @AutoAdd.Seen
 public class OrangeRelic extends BaseRelic {
-    private static final String NAME = "OrangeRelic";
+    private static final String NAME = "Orange";
     public static final String ID = makeID(NAME);
     private static final RelicTier RARITY = RelicTier.STARTER;
     private static final LandingSound SOUND = LandingSound.MAGICAL;

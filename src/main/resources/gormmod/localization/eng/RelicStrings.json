@@ -6,7 +6,7 @@
       "Gain [E] at the start of your turn. [E] is an energy icon."
     ]
   },
-  "${modID}:OrangeRelic": {
+  "${modID}:Orange": {
     "NAME": "Tasty Orange",
     "FLAVOR": "Freshly sliced, a crab's favourite.",
     "DESCRIPTIONS": [
@@ -14,13 +14,20 @@
       " #yStrength."
     ]
   },
-  "${modID}:HighRollerRelic": {
+  "${modID}:HighRoller": {
     "NAME": "High Roller",
     "FLAVOR": "Are you feeling lucky... crab?",
     "DESCRIPTIONS": [
       "Whenever you open a chest, you have an #g%s #gchance to gain an NL additional ",
       "[#cccccc]common[] / [#42d4f5]uncommon[] / [#decb1f]rare[] relic",
       ", but a #r%s #rchance to lose ALL relics."
+    ]
+  },
+  "${modID}:GoldDice": {
+    "NAME": "Gold Dice",
+    "FLAVOR": "let me roll that again.",
+    "DESCRIPTIONS": [
+      "Before your first attack each turn, gain #b%s #ygormmod:Luck"
     ]
   }
 }

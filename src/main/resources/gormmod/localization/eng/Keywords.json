@@ -19,5 +19,12 @@
       "multiword_keywords"
     ],
     "DESCRIPTION": "Make sure the first element in NAMES has no underscores. The rest should use _ in the place of spaces. In card text, you'll use the underscore versions."
+  },
+  {
+    "PROPER_NAME": "Luck",
+    "NAMES": [
+      "luck"
+    ],
+    "DESCRIPTION": "When you have #yLuck, you gain a chance to add an additional damage roll on every attack. NL NL The resulting damage added is the higher of two rolls."
   }
 ]
