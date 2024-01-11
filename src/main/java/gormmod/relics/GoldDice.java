@@ -44,7 +44,7 @@ public class GoldDice extends BaseRelic {
     public void onPlayCard(AbstractCard card, AbstractMonster m){
         AbstractPlayer p =  AbstractDungeon.player;
         if(card.type == CardType.ATTACK && this.counter > 0){
-            addToBot(new RemoveSpecificPowerAction(p, p, "GoldDice"));
+            addToBot(new RemoveSpecificPowerAction(p, p, makeID("Luck")));
             --this.counter;
         }
     }

@@ -27,7 +27,7 @@
     "NAME": "Gold Dice",
     "FLAVOR": "let me roll that again.",
     "DESCRIPTIONS": [
-      "Before your first attack each turn, gain #b%s #ygormmod:Luck"
+      "For your first attack each turn only, gain #b%s temporary #ygormmod:Luck"
     ]
   }
 }
