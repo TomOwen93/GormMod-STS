@@ -20,5 +20,30 @@
   "${modID}:StrikePink": {
     "NAME": "Claw Swipe",
     "DESCRIPTION": "Deal !D! damage."
+  },
+  "${modID}:Spriggs": {
+    "NAME": "Spriggs",
+    "DESCRIPTION": "Deal !D! damage."
+  },
+  "${modID}:Sam": {
+    "NAME": "Sam",
+    "DESCRIPTION": "Deal !D! damage."
+  },
+  "${modID}:Adnan": {
+    "NAME": "Adnan",
+    "DESCRIPTION": "Deal !D! damage."
+  },
+  "${modID}:Ben": {
+    "NAME": "Ben",
+    "DESCRIPTION": "Deal !D! damage."
+  },
+  "${modID}:Tom": {
+    "NAME": "Tom",
+    "DESCRIPTION": "Deal !D! damage."
+  },
+  "${modID}:BeardedValley": {
+    "NAME": "The Bearded Valley",
+    "DESCRIPTION": "Choose a [#decb1f]Bearded[] [#decb1f]Valley[] card to add to your hand, these cards cost !M!"
   }
+
 }
